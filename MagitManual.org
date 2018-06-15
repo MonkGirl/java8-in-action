@@ -1,0 +1,14 @@
+1、获取repository地址，使用M-x magit-clone导入repository地址
+2、使用命令g刷新目录。
+3、执行M-x magit-status查看git情况，输入M-x magit-commit或者快捷键c c提交改动。
+4、输入完备注信息后，执行快捷键C-c C-c提交commit。
+5、执行M-x magit-push,push操作。push本地的master到远程repository的origin/master。
+6、在magit-status窗口使用快捷键$，打开magit-process，查看进程。
+others：
+1、M-x magit-pull：指令即从远程仓库sync到本地，与magit-push功能一样，只是sync的方向不同。
+2、magit无法track新建文件，解决方案是在magit-status下commit窗口中在新文件行按s重新stage。
+3、M-x magit-log-all 查看github项目的所有分支提示日志。
+4、M-x magit-tag 为本地添加tag标签
+5、M-x magit-push-tag 提交tag标签到远程仓库
+6、在magit-mode 状态下b b 切换分支
+
