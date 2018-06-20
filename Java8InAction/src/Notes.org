@@ -3,8 +3,22 @@
 3) 谓词(Predicate)：即一个返回boolean值的函数。
 4) 行为参数化：让方法接受多种行为(或者战略)作为参数，并在内部使用，来完成不同的行为。就是一个方法接受多个不同的行为作为参数，并在内部使用它们，完成不同行为的能力。
 5) 可以把Lambda表达式理解为简洁地表示可传递的匿名函数的一种方式：它没有名称，但有参数列表、函数主体、返回类型，可能还有一个可以抛出的异常列表。
-6) 箭头->把参数列表与Lambda主体分开。Lambda的基本语法是(parameters)->expression或者(parameters)->{statements;}.
-7) 可以在函数式接口上使用Lambda表达式。函数式接口就是只定义一个抽象方法的接口。Lambda表达式直接以内联的形式为函数式接口的抽象方法提供实现，并把整个表达式作为函数式接口的实例。
-8) 函数式接口的抽象方法的签名基本上就是Lambda表达式的签名，这种抽象方法叫做函数描述符。
-9) @FunctionalInterface注解表示该接口会设计成一个函数式接口。
-10) 任何函数式接口都不允许抛出受检异常(checked exception)。
+6) 匿名：没有明确的名称；函数：不属于特定的类，有参数列表、函数主体、返回类型以及可能的抛出的异常列表；传递：Lambda表达式可以作为参数传递给方法或者存储在变量中；简洁：无需像匿名类那样写很多模板代码。
+7) Lambda没有return语句，因为已经隐含了return。表达式部分可以包含多行语句，需要使用大括号。
+8) 箭头->把参数列表与Lambda主体分开。Lambda的基本语法是(parameters)->expression或者(parameters)->{statements;}.
+9) 可以在函数式接口上使用Lambda表达式。函数式接口就是只定义一个抽象方法的接口。Lambda表达式直接以内联的形式为函数式接口的抽象方法提供实现，并把整个表达式作为函数式接口的实例。
+10) 函数式接口的抽象方法的签名基本上就是Lambda表达式的签名，这种抽象方法叫做函数描述符。
+11) @FunctionalInterface注解表示该接口会设计成一个函数式接口。
+12) 任何函数式接口都不允许抛出受检异常(checked exception)。
+13) a、Predicate<T>接口定义了一个名叫test的抽象方法，它接受泛型T对象，并返回一个boolean。
+    b、Consumer<T>接口定义了一个名叫accept的抽象方法，它接受泛型T对象，并返回一个void。
+    c、Function<T>接口定义了一个名叫apply的抽象方法，它接受泛型T对象，并返回一个泛型R对象。
+14) Lambda的类型是从使用Lambda的上下文推断出来的。上下文中Lambda表达式需要的类型称为目标类型。
+15) Java7中引入了菱形运算符<>，利用泛型推断从上下文推断类型的思想。比如：List<String> listOfStrings = new ArrayList<>(); List<Integer> listOfIntegers = new ArrayList<>();
+16) 如果一个Lambda的主体是一个语句表达式，它就和一个返回void的函数描述符兼容（当然需要参数列表也兼容）。
+17) Lambda可以没有限制地捕获(也就是在其主体中引用)实例变量和静态变量，但局部变量必须显示声明为final，或者事实上是final。
+18) 实例变量都存储在堆中，而局部变量则保存在栈上。如果Lambda可以直接访问局部变量，而且Lambda是在一个线程中使用，则使用Lambda的线程，可能会在分配该变量的线程将这个变量收回之后，去访问该变量。因此，Java在访问自由局部变量时，实际上是在访问它的副本，而不是访问原始变量。
+19) 方法引用主要有三类：
+    1、指向静态方法的方法引用(例如Integer的parseInt方法，写作Integer::parseInt)
+    2、指向任意类型实例方法的方法引用（例如String的length方法，写作String::length）
+    3、指向现有对象的实例方法的方法引用（假设有个局部变量expensiveTransaction用于存放Transaction类型的对象，它支持实例方法getValue，那么就可以写成expensiveTransaction::getValue）

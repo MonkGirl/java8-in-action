@@ -19,7 +19,7 @@ public class Exercise{
 	System.out.println(AppleBasket.filterApple(list, AppleBasket::isGreen));
 	System.out.println(AppleBasket.filterApple(list, AppleBasket::isHeavy));
 
-	System.out.println(AppleBasket.filterApple(list, (Apple a)->"green".equalsIgnoreCase(a.getColor())));
+	System.out.println(AppleBasket.filterApple(list, a->"green".equalsIgnoreCase(a.getColor())));
 	System.out.println(AppleBasket.filterApple(list, (Apple a)->a.getWeight()>150));
 
 	System.out.println(LambdaUtils.filter(list, (Apple a)->"red".equalsIgnoreCase(a.getColor())));
