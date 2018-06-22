@@ -11,6 +11,14 @@ public class Apple{
 
     // the weight of apple
     private double weight;
+
+    public Apple(){
+       this("green", 302);
+    }
+
+    public Apple(double weight){
+	this("green", weight);
+    }
     
     public Apple(String color, double weight){
 	this.color = color;

@@ -22,3 +22,4 @@
     1、指向静态方法的方法引用(例如Integer的parseInt方法，写作Integer::parseInt)
     2、指向任意类型实例方法的方法引用（例如String的length方法，写作String::length）
     3、指向现有对象的实例方法的方法引用（假设有个局部变量expensiveTransaction用于存放Transaction类型的对象，它支持实例方法getValue，那么就可以写成expensiveTransaction::getValue）
+20) 对于一个现有的构造函数，可以利用它的名字和关键字new来创建它的一个引用，比如ClassName::new。它的功能与指向静态方法的引用类似。
