@@ -6,6 +6,8 @@ import com.monkgirl.java8InAction.common.Apple;
 import java.util.function.Supplier;
 import java.util.function.Function;
 import java.util.function.BiFunction;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MethodsReferenceDemo{
     public static void main(String...args){
@@ -27,5 +29,18 @@ public class MethodsReferenceDemo{
 	Apple a3 = b.apply("yellow", 203);
 
 	System.out.println(a3);
+
+	System.out.println(giveMeApple("green", 204));
+    }
+
+    static Map<String, Function<Integer, Apple>> map = new HashMap<>();
+
+    static{
+	map.put("green", Apple::new);
+	map.put("purple", Apple::new);
+    }
+    
+    public static Apple giveMeApple(String color, Integer weight){
+	return map.get(color.toLowerCase()).apply(weight);
     }
 }
