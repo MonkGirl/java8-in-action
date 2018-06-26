@@ -13,6 +13,7 @@ import com.monkgirl.java8InAction.common.Computer;
 import com.monkgirl.java8InAction.common.TriFunction;
 import java.util.Collections;
 import java.util.function.Predicate;
+import java.util.function.DoubleFunction;
 import static java.util.Comparator.*;
 
 public class Exercises{
@@ -21,7 +22,9 @@ public class Exercises{
 	//run2();
 	//run3();
 	//run4();
-	run5();
+	//run5();
+	//run6();
+	run7();
     }
 
     public static void run1(){
@@ -115,10 +118,44 @@ public class Exercises{
 	System.out.println(h.apply(1));
 	System.out.println(p.apply(1));
     }
+
+    public static void run6(){
+	String mailText = "Long time no see, labda.";
+	Function<String, String> addHeader = Letter::addHeader;
+
+	Function<String, String> transformationPipeline;
+
+	//transformationPipeline = addHeader.andThen(Letter::checkSpelling);
+	transformationPipeline = addHeader.andThen(Letter::checkSpelling).andThen(Letter::addFooter);
+	System.out.println(transformationPipeline.apply(mailText));
+    }
+
+    public static void run7(){
+	DoubleFunction<Double> df = x -> x + 10;
+	System.out.println(integerate(df, 3, 7));
+    }
+
+    private static double integerate(DoubleFunction<Double> f, double a, double b){
+	return (f.apply(a) + f.apply(b))*Math.abs(a-b)/2;
+    }
 }
 
 class AppleComparator implements Comparator<Apple>{
     public int compare(Apple a1, Apple a2){
 	return Double.valueOf(a1.getWeight()).compareTo(Double.valueOf(a2.getWeight()));
+    }
+}
+
+class Letter{
+    public static String addHeader(String text){
+	return "From Raol, Mario and Alan: \n" + text;
+    }
+
+    public static String addFooter(String text){
+	return text + "\nKind regards";
+    }
+
+    public static String checkSpelling(String text){
+	return text.replaceAll("labda", "lambda");
     }
 }
