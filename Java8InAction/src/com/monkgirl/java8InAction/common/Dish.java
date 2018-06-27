@@ -55,4 +55,7 @@ public class Dish{
        MEAT, FISH, OTHER
     }
 
+    public int compareTo(Dish dish){
+	return dish.getName().compareTo(this.getName());
+    }
 }

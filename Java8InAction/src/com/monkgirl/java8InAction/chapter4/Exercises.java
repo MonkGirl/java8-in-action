@@ -98,9 +98,24 @@ public class Exercises{
 	List<String> threeHighCaloricDishNames = menu.stream()
 	    .filter(d->d.getCalories()>400)
 	    .map(Dish::getName)
-	    .sorted((a, b)->(a.getName()).compareTo(b.getName()))
+	    .limit(3)
+	    .sorted((a, b)->a.compareTo(b))
+	    .collect(toList());
+	System.out.println(threeHighCaloricDishNames);
+    }
+
+    public static void run5(){
+	List<String> threeHighCaloricDishNames = menu.stream()
+	    .filter(d->{
+		    System.out.println("filtering: " + d.getName());
+		    return d.getCalories()>400;})
+	    .map(d->{
+		    System.out.println("mapping: " + d.getName());
+		    return d.getName();
+		})
 	    .limit(3)
 	    .collect(toList());
 	System.out.println(threeHighCaloricDishNames);
     }
+
 }
