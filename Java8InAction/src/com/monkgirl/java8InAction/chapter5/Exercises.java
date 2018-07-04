@@ -28,7 +28,8 @@ public class Exercises{
 	//run1();
 	//run2();
 	//run3();
-	run4();
+	//run4();
+	run5();
     }
 
     public static void run1(){
@@ -113,5 +114,25 @@ public class Exercises{
 	    .filter(i->i%2==0)
 	    .findFirst();
 	System.out.println(firstSquareDivisibleByTwo);
+    }
+
+    public static void run5(){
+	List<Integer> numbers = Arrays.asList(2,4,7,1,2,3,-4);
+	//int result1 = numbers.parallelStream().reduce(0,(a, b)->a+b);
+	int result1 = numbers.parallelStream().reduce(0, Integer::sum);
+	System.out.println(result1);
+
+	int result2 = numbers.parallelStream().reduce(1,(a,  b)->a*b);
+	System.out.println(result2);
+
+	Optional<Integer> result3 = numbers.parallelStream().reduce(Integer::sum);
+	System.out.println(result3.get());
+
+	//Optional<Integer> result4 = numbers.parallelStream().reduce(Integer::max);
+	Optional<Integer> result4 = numbers.parallelStream().reduce(Integer::min);
+	System.out.println(result4.get());
+
+	int count = menu.parallelStream().map(d->1).reduce(0,Integer::sum);
+	System.out.println(count);
     }
 }
