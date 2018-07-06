@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.OptionalDouble;
+import java.util.stream.DoubleStream;
+import java.util.stream.Stream;
+import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toList;
 
 public class Exercises{
@@ -29,7 +33,9 @@ public class Exercises{
 	//run2();
 	//run3();
 	//run4();
-	run5();
+	//run5();
+	//run6();
+	run7();
     }
 
     public static void run1(){
@@ -134,5 +140,36 @@ public class Exercises{
 
 	int count = menu.parallelStream().map(d->1).reduce(0,Integer::sum);
 	System.out.println(count);
+    }
+
+    public static void run6(){
+	double calories = menu.parallelStream()
+	    .mapToDouble(Dish::getCalories)
+	    .sum();
+	System.out.println(calories);
+
+	OptionalDouble max = menu.parallelStream()
+	    .mapToDouble(Dish::getCalories)
+	    .max();
+	System.out.println(max.getAsDouble());
+
+	DoubleStream doubleStream = menu.parallelStream()
+	    .mapToDouble(Dish::getCalories);
+
+	Stream<Double> stream = doubleStream.boxed();
+
+	IntStream evenNumber = IntStream.rangeClosed(1, 100);
+	//System.out.println(evenNumber.sum());
+	List<Integer> list = evenNumber.boxed().collect(toList());
+	System.out.println(list);
+    }
+
+    public static void run7(){
+	IntStream number = IntStream.rangeClosed(1, 100);
+	Stream<int[]> pythagoreanTriples = number.boxed()
+	    .flatMap(a->IntStream.rangeClosed(a, 100)
+		     .filter(b->Math.sqrt(a*a+b*b)%1==0)
+		     .mapToObj(b->new int[]{a, b, (int)Math.sqrt(a*a+b*b)}));
+        pythagoreanTriples.forEach(a->System.out.println(a[0]+","+a[1]+","+a[2]));
     }
 }
