@@ -11,6 +11,16 @@ import java.util.OptionalDouble;
 import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
 import java.util.stream.IntStream;
+import java.nio.charset.Charset;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.io.File;
+import java.io.FileReader;
+import java.util.Set;
+import java.util.HashSet;
+import java.io.BufferedReader;
 import static java.util.stream.Collectors.toList;
 
 public class Exercises{
@@ -35,7 +45,10 @@ public class Exercises{
 	//run4();
 	//run5();
 	//run6();
-	run7();
+	//run7();
+	//run8();
+	//run9();
+	run10();
     }
 
     public static void run1(){
@@ -171,5 +184,64 @@ public class Exercises{
 		     .filter(b->Math.sqrt(a*a+b*b)%1==0)
 		     .mapToObj(b->new int[]{a, b, (int)Math.sqrt(a*a+b*b)}));
         pythagoreanTriples.forEach(a->System.out.println(a[0]+","+a[1]+","+a[2]));
+    }
+
+    public static void run8(){
+	Stream<String> stream = Stream.of("Java8", "In", "Action");
+	stream.map(String::toUpperCase).forEach(System.out::println);
+
+	int[] numbers = {1,2,3,4,5,6,7};
+	int sum = Arrays.stream(numbers).sum();
+	System.out.println(sum);
+
+    }
+
+    public static void run9(){
+	Path path = Paths.get("E:/Java8/Java8InAction/data.txt");
+	long startTime1 = System.nanoTime();
+	try{
+	    Stream<String> lines = Files.lines(path, Charset.defaultCharset());
+	    long uniqueWords = lines.flatMap(line->Arrays.stream(line.split(" "))).distinct().count();
+	    System.out.println(uniqueWords);
+	}catch(IOException e){
+
+	}
+	System.out.println((System.nanoTime()-startTime1)/1000.0);
+
+	long startTime2 = System.nanoTime();
+	BufferedReader reader = null;
+	try{
+	    reader = new BufferedReader(new FileReader(new File("E:/java8/Java8InAction/data.txt")));
+	    String str;
+	    Set<String> container = new HashSet<>();
+	    while((str=reader.readLine())!=null){
+		for(String s : str.split(" ")){
+		    container.add(s);
+		}
+	    }
+	    System.out.println(container.size());
+	}catch(IOException e){
+	    
+	}finally{
+	    if(reader!=null){
+		try{
+		    reader.close();
+		}catch(IOException e){
+		}
+	    }
+	}
+	System.out.println((System.nanoTime()-startTime2)/1000.0);
+    }
+
+    public static void run10(){
+	//iterate
+	Stream.iterate(0, n->n+2)
+	    .limit(10)
+	    .forEach(System.out::println);
+
+	Stream.iterate(new int[]{0,1},t->new int[]{t[1], t[0]+t[1]})
+	    .limit(10)
+	    .map(t->t[0])
+	    .forEach(System.out::println);
     }
 }

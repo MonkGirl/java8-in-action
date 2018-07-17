@@ -107,3 +107,5 @@
     |-----------+---------------------+-------------+------------------------+--------------|
 36) Java8引入了三个原始类型特化流接口：IntStream，DoubleStream和LongStream，分别将流中的元素特化为int、double和long，从而避免了暗含的装箱成本。将流转换为特化版本的常用方法是mapToInt、mapToDouble和mapToLong，只返回一个特化流，而不是Stream<T>.
 37) mapToObj返回一个对象值流。
+38) Stream.of通过显示值创建一个流，可以接受任意数量的参数。使用empty得到一个空流。Arrays.stream从数组创建一个流。Files.lines返回一个由指定文件中的各行构成的字符串流。
+39) 从函数生成流：Stream.iterate和Stream.generate。这两个流可以产生无限流。
