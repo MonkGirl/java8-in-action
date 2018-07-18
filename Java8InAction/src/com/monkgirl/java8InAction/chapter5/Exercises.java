@@ -21,6 +21,7 @@ import java.io.FileReader;
 import java.util.Set;
 import java.util.HashSet;
 import java.io.BufferedReader;
+import java.util.function.IntSupplier;
 import static java.util.stream.Collectors.toList;
 
 public class Exercises{
@@ -48,7 +49,9 @@ public class Exercises{
 	//run7();
 	//run8();
 	//run9();
-	run10();
+	//run10();
+	//run11();
+	run12();
     }
 
     public static void run1(){
@@ -242,6 +245,40 @@ public class Exercises{
 	Stream.iterate(new int[]{0,1},t->new int[]{t[1], t[0]+t[1]})
 	    .limit(10)
 	    .map(t->t[0])
+	    .forEach(System.out::println);
+    }
+
+    public static void run11(){
+	Stream.generate(Math::random)
+	    .limit(5)
+	    .forEach(System.out::println);
+
+	IntStream.generate(()->1)
+	    .limit(5)
+	    .forEach(System.out::println);
+
+	IntStream.generate(new IntSupplier(){
+		public int getAsInt(){
+		    return 3;
+		}
+	    }).limit(5)
+	    .forEach(System.out::println);
+    }
+
+    public static void run12(){
+	IntSupplier fib = new IntSupplier(){
+		private int previous = 0;
+		private int current  = 1;
+		public int getAsInt(){
+		    int oldPrevious = this.previous;
+		    int nextValue = this.previous + this.current;
+		    this.previous = this.current;
+		    this.current  = nextValue;
+		    return oldPrevious;
+		}
+	    };
+	IntStream.generate(fib)
+	    .limit(5)
 	    .forEach(System.out::println);
     }
 }
