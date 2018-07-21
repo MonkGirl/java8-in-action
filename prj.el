@@ -1,4 +1,3 @@
-(jdee-set-variables)
 (setq jdee-compile-option-directory "E:/Java8/Java8InAction/classes")
 (setq jdee-built-class-path "E:/Java8/Java8InAction/classes")
 (setq jdee-sourcepath (quote ("E:/Java8/Java8InAction/src")))
@@ -8,3 +7,5 @@
 				   )
 				  )
       )
+(jdee-project-file-version "1.0")
+(jdee-set-variables)
