@@ -15,8 +15,9 @@ import java.util.Comparator;
 import com.monkgirl.java8InAction.common.Dish;
 import java.util.Optional;
 import com.monkgirl.java8InAction.common.Menu;
-import java.util.Collections;
 import com.monkgirl.java8InAction.common.CaloricLevel;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Exercise1{
     private static Trader raoul = new Trader("Raoul", "Cambridge");
@@ -37,7 +38,9 @@ public class Exercise1{
 	//run1();
 	//run2();
 	//run3();
-	run4();
+	//run4();
+	//run5();
+	run6();
     }
 
     public static void run1(){
@@ -94,5 +97,64 @@ public class Exercise1{
 				       }else{
 				           return CaloricLevel.NORMAL;
 				       }})));
+    }
+
+    public static void run5(){
+	Map<Dish.Type, Map<CaloricLevel, List<Dish>>> map = menu.stream()
+	    .collect(Collectors.groupingBy(Dish::getType, Collectors.groupingBy(dish->{
+			    if(dish.getCalories()<400){
+				           return CaloricLevel.DIET;
+				       }else if(dish.getCalories()>700){
+				           return CaloricLevel.FAT;
+				       }else{
+				           return CaloricLevel.NORMAL;
+				       }
+			})));
+        System.out.println(map);
+
+        Map<Dish.Type, Long> map1 = menu.stream()
+	    .collect(Collectors.groupingBy(Dish::getType, Collectors.counting()));
+        System.out.println(map1);
+
+        Map<Dish.Type, Optional<Dish>> map2 = menu.stream()
+	    .collect(Collectors.groupingBy(Dish::getType, Collectors.minBy(Comparator
+									   .comparingDouble(Dish::getCalories))));
+        System.out.println(map2);
+    }
+
+    public static void run6(){
+	Map<Dish.Type, Dish> map1 = menu.stream()
+	    .collect(Collectors.groupingBy(Dish::getType,
+					   Collectors.collectingAndThen(
+									Collectors.maxBy(Comparator.comparingDouble(Dish::getCalories)), Optional::get)));
+	System.out.println(map1);
+
+	Map<Dish.Type, Double> map2 = menu.stream()
+	    .collect(Collectors.groupingBy(Dish::getType, Collectors.summingDouble(Dish::getCalories)));
+	System.out.println(map2);
+
+	Map<Dish.Type, Set<CaloricLevel>> map3 = menu.stream()
+	    .collect(Collectors.groupingBy(Dish::getType, Collectors.mapping(dish->{
+			    if(dish.getCalories()<400){
+				           return CaloricLevel.DIET;
+				       }else if(dish.getCalories()>700){
+				           return CaloricLevel.FAT;
+				       }else{
+				           return CaloricLevel.NORMAL;
+				       }
+			},Collectors.toSet())));
+	System.out.println(map3);
+
+	Map<Dish.Type, Set<CaloricLevel>> map4 = menu.stream()
+	    .collect(Collectors.groupingBy(Dish::getType, Collectors.mapping(dish->{
+			    if(dish.getCalories()<400){
+				           return CaloricLevel.DIET;
+				       }else if(dish.getCalories()>700){
+				           return CaloricLevel.FAT;
+				       }else{
+				           return CaloricLevel.NORMAL;
+				       }
+			},Collectors.toCollection(HashSet::new))));
+	System.out.println(map4);
     }
 }

@@ -58,4 +58,14 @@ public class Dish{
     public int compareTo(Dish dish){
 	return dish.getName().compareTo(this.getName());
     }
+
+    public CaloricLevel getCaloricLevel(){
+	if(this.getCalories()<=400){
+	    return CaloricLevel.DIET;
+	}else if(this.getCalories()<=700){
+	    return CaloricLevel.NORMAL;
+	}else{
+	    return CaloricLevel.FAT;
+	}
+    }
 }
