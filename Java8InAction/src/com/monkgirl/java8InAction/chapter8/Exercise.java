@@ -27,7 +27,8 @@ public class Exercise{
 
     
     public static void main(String...args){
-	run1();
+	//run1();
+	run2();
     }
 
     public static void doSomething(Runnable r){
@@ -58,5 +59,14 @@ public class Exercise{
 
 	List<String> list = menu.parallelStream().filter(dish->dish.getCalories()>300).map(Dish::getName).collect(Collectors.toList());
 	System.out.println(list);
+    }
+
+    public static void run2(){
+	Validator numericValidator = new Validator(new IsNumeric());
+	boolean b1 = numericValidator.validate("aaa");
+	Validator lowerCaseValidator = new Validator(new IsAllLowerCase());
+	boolean b2 = lowerCaseValidator.validate("bbb");
+	System.out.println("numericValidator: " + b1);
+	System.out.println("lowerCaseValidator: " + b2);
     }
 }
