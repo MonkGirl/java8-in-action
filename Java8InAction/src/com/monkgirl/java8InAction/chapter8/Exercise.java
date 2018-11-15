@@ -68,5 +68,10 @@ public class Exercise{
 	boolean b2 = lowerCaseValidator.validate("bbb");
 	System.out.println("numericValidator: " + b1);
 	System.out.println("lowerCaseValidator: " + b2);
+
+	Validator numericValidatorLambda = new Validator((String str)->str.matches("[a-z]+"));
+	System.out.println(numericValidatorLambda.validate("ccc"));
+	Validator lowerCaseValidatorLambda = new Validator((String str)->str.matches("\\d+"));
+	System.out.println(lowerCaseValidatorLambda.validate("ddd"));
     }
 }
