@@ -8,6 +8,8 @@ import com.monkgirl.java8InAction.common.Dish.Type;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.function.UnaryOperator;
+import java.util.function.Function;
 
 public class Exercise{
 
@@ -28,7 +30,10 @@ public class Exercise{
     
     public static void main(String...args){
 	//run1();
-	run2();
+	//run2();
+	//run3();
+	//run4();
+	run5();
     }
 
     public static void doSomething(Runnable r){
@@ -73,5 +78,48 @@ public class Exercise{
 	System.out.println(numericValidatorLambda.validate("ccc"));
 	Validator lowerCaseValidatorLambda = new Validator((String str)->str.matches("\\d+"));
 	System.out.println(lowerCaseValidatorLambda.validate("ddd"));
+    }
+
+    public static void run3(){
+	Feed feed = new Feed();
+	//feed.registerObserver(new NYTimes());
+	//feed.registerObserver(new Guardian());
+	//feed.registerObserver(new LeMonde());
+
+	feed.registerObserver((String tweet)->{
+		if(tweet!=null&&tweet.contains("money")){
+		    System.out.println("Breaking news in London... " + tweet);
+		}
+	    });
+
+	feed.registerObserver((String tweet)->{
+		if(tweet!=null&&tweet.contains("queue")){
+		    System.out.println("Yet another news in London... " + tweet);
+		}
+	    });
+	feed.notifyObservers("The queue said her favourite book is Java 8 in Action!");
+    }
+
+    public static void run4(){
+	ProcessingObject<String> p1 = new HeaderTextProcessing();
+	ProcessingObject<String> p2 = new SpellCheckerProcessing();
+
+	p1.setSuccessor(p2);
+
+	String result = p1.handle("Aren't labdas really sexy?!! ");
+	System.out.println(result);
+
+	UnaryOperator<String> headerProcessing = (String text) -> "From Raoul, Mario and Alan: " + text;
+	UnaryOperator<String> spellCheckerProcessing = (String text) -> text.replaceAll("labda", "lambda");
+
+	Function<String, String> pipeline = headerProcessing.andThen(spellCheckerProcessing);
+	result = pipeline.apply("Aren't labdas really sexy?!!");
+
+	System.out.println(result);
+    }
+
+    public static void run5(){
+	Product p = ProductFactory.createProduct("loan");
+	System.out.println(p);
     }
 }

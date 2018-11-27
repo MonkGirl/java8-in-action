@@ -1,4 +1,4 @@
-package com.monkgirl.java8InActin.chapter7;
+package com.monkgirl.java8InAction.chapter7;
 
 import java.util.stream.Stream;
 import java.util.function.Function;
