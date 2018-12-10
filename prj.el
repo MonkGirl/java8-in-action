@@ -5,7 +5,6 @@
 (setq jdee-global-classpath (quote (
 				    "E:/Java8/Java8InAction/classes"
 				    "E:/Tools/Jars/junit-4.12.jar"
-				    "E:/Tools/Jars/hamcrest-core-1.3.jar"
 				   )
 				  )
       )
