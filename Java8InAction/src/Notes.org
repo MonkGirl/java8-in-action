@@ -174,5 +174,8 @@
     | OrElseThrow(Supplier<? extends T> exceptionSupplier) | 遭遇Optional对象为空时抛出一个异常                                                         |
     |------------------------------------------------------+--------------------------------------------------------------------------------------------|
     | ifPresent(Consumer<? super T>)                       | 变量存在时执行一个作为参数传入的方法，否则不进行任何操作                                                               |
-   
-
+68) 同步API其实只是对传统方法调用的另一种称呼，阻塞式调用；异步API会直接返回，或者至少在被调用方计算完成前，将剩余的计算任务交给另一个线程去做，该线程和调用方是异步的，非阻塞式调用。
+69) 如果进行的是计算密集型的操作，并且没有I/O，推荐使用Stream接口；如果并行的工作单元还涉及到等待I/O的操作（也包括网络连接等待），使用CompletableFuture灵活性更好。
+70) CompletableFuture提供thenCompose的方法，允许对两个异步操作进行流水线，第一个操作完成时，将其结果作为参数传递给第二个参数。
+71) allOf工厂方法接收一个由CompletableFuture组成的数组，数组中所有的CompletableFuture对象执行完成后，返回一个CompletableFuture<Void>对象。
+72) anyOf工厂方法接收一个由CompletableFuture组成的数组，返回由第一个执行完毕的CompletableFuture对象的返回值构成的CompletableFuture<Object>对象。
