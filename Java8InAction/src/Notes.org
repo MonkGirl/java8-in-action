@@ -179,3 +179,5 @@
 70) CompletableFuture提供thenCompose的方法，允许对两个异步操作进行流水线，第一个操作完成时，将其结果作为参数传递给第二个参数。
 71) allOf工厂方法接收一个由CompletableFuture组成的数组，数组中所有的CompletableFuture对象执行完成后，返回一个CompletableFuture<Void>对象。
 72) anyOf工厂方法接收一个由CompletableFuture组成的数组，返回由第一个执行完毕的CompletableFuture对象的返回值构成的CompletableFuture<Object>对象。
+73) 函数式编程：使用函数进行编程的一种方式。被称为“函数式”的函数或方法都只能修改本地变量。除此之外，它引用的对象都应该是不可修改的对象。函数或者方法不应该抛出异常。
+74) 科里化是一种将具备2个参数的函数f转化为使用一个参数的函数g，并且这个函数的返回值也是一个函数，它会作为新函数的一个参数。
