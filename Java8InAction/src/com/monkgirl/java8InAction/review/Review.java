@@ -17,6 +17,9 @@ import com.monkgirl.java8InAction.common.Menu;
 import java.util.Map;
 import java.util.Optional;
 import java.util.DoubleSummaryStatistics;
+import com.monkgirl.java8InAction.common.CaloricLevel;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Review{
     private static List<String> list = new ArrayList<>();
@@ -34,7 +37,10 @@ public class Review{
 	//run2();
 	//run3();
 	//run4();
-	run5();
+	//run5();
+	//run6();
+	//run7();
+	run8();
     }
 
     public static void run1(){
@@ -153,5 +159,95 @@ public class Review{
 
 	double sumCalories2 = dishs.stream().mapToDouble(Dish::getCalories).sum();
 	System.out.println(sumCalories2);
+    }
+
+    public static void run6(){
+	Map<Dish.Type, Map<CaloricLevel, List<Dish>>> dishesByTypeCaloricLevel
+	    = Menu.menu.stream()
+	    .collect(Collectors
+		     .groupingBy(Dish::getType, Collectors.groupingBy(dish -> {if(dish.getCalories() <= 400){
+				     return CaloricLevel.DIET;
+				 }else if(dish.getCalories() <= 700){
+				     return CaloricLevel.NORMAL;
+				 }else{
+				     return CaloricLevel.FAT;
+				 }
+			     })));
+	System.out.println(dishesByTypeCaloricLevel);
+
+	Map<Dish.Type, Long> dishesByTypeNum
+	    = Menu.menu.stream()
+	    .collect(Collectors.groupingBy(Dish::getType, Collectors.counting()));
+	System.out.println(dishesByTypeNum);
+
+	Map<Dish.Type, Optional<Dish>> mostCaloricByType
+	    = Menu.menu.stream()
+	    .collect(Collectors.groupingBy(Dish::getType,
+					   Collectors.maxBy(Comparator.comparingDouble(Dish::getCalories))));
+	System.out.println(mostCaloricByType);
+
+	Map<Dish.Type, Dish> mostCaloricByType1
+	    = Menu.menu.stream()
+	    .collect(Collectors
+		     .groupingBy(Dish::getType,
+				 Collectors.collectingAndThen(Collectors
+							      .maxBy(Comparator.comparingDouble(Dish::getCalories)),
+									Optional::get)));
+	System.out.println(mostCaloricByType1);
+
+	Map<Dish.Type, Double> sumCaloricByType
+	    = Menu.menu.stream()
+	    .collect(Collectors
+		     .groupingBy(Dish::getType,
+				 Collectors.summingDouble(Dish::getCalories)));
+	System.out.println(sumCaloricByType);
+    }
+
+    public static void run7(){
+	Map<Boolean, List<Dish>> map = Menu.menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian));
+	System.out.println(map);
+
+	Map<Boolean, Map<Dish.Type, List<Dish>>> map1 = Menu.menu.stream()
+	    .collect(Collectors.partitioningBy(Dish::isVegetarian,
+					       Collectors.groupingBy(Dish::getType)));
+	System.out.println(map1);
+
+	System.out.println(isPrime(85));
+
+	System.out.println(partitionPrimes(25));
+    }
+
+    public static boolean isPrime(int candicate){
+	int candicateRoot = (int) Math.sqrt((double)candicate);
+	return IntStream.rangeClosed(2, candicateRoot)
+	    .noneMatch(i -> candicate%i==0);
+    }
+
+    public static Map<Boolean, List<Integer>> partitionPrimes(int n){
+	return IntStream.rangeClosed(2, n).boxed()
+	    .collect(Collectors.partitioningBy(Review::isPrime));
+    }
+
+    public static long parallelSum(long n){
+	return Stream.iterate(1L, i -> i+1)
+	    .limit(n)
+	    .parallel()
+	    .reduce(0L, Long::sum);
+    }
+
+    public static long sequentSum(long n){
+	return Stream.iterate(1L, i -> i+1)
+	    .limit(n)
+	    .reduce(0L, Long::sum);
+    }
+    
+    public static void run8(){
+	Long startTime1 = System.nanoTime();
+	System.out.println(parallelSum(100));
+	System.out.println((System.nanoTime()-startTime1)/1_000 + " ms");
+
+	Long startTime2 = System.nanoTime();
+	System.out.println(sequentSum(100));
+	System.out.println((System.nanoTime()-startTime2)/1_000 + " ms");
     }
 }
