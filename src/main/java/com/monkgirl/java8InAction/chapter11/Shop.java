@@ -49,4 +49,8 @@ public class Shop{
 		return futurePrice;*/
 	return CompletableFuture.supplyAsync(() -> calculatePrice(product));
     }
+
+	public void doSomethingElse(){
+
+	}
 }

@@ -1,16 +1,13 @@
-import com.monkgirl.chapter4.Dish;
-import com.monkgirl.chapter4.Utils;
-import com.monkgirl.chapter4.Shop;
+import com.monkgirl.java8InAction.chapter11.Shop;
+import com.monkgirl.java8InAction.common.Dish;
+import com.monkgirl.java8InAction.common.Utils;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.IntSummaryStatistics;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.IntSupplier;
 import java.util.stream.Collectors;
@@ -47,7 +44,7 @@ class TestStream {
         //System.out.println(intStream.reduce(0, (a, b) -> a+b));
         //System.out.println(intStream.reduce(0, Integer::sum));
         System.out.println(intStream.reduce(0, Integer::max));
-        System.out.println(Utils.menus.stream().mapToInt(Dish::getCalories).sum());
+        System.out.println(Utils.menus.stream().mapToDouble(Dish::getCalories).sum());
     }
 
     @Test
@@ -141,10 +138,10 @@ class TestStream {
     void testCollect() {
         System.out.println(Utils.menus.stream().count());
         //System.out.println(Menu.menuList.stream().collect(summingInt(Dish::getCalories)));
-        System.out.println((Integer) Utils.menus.stream().mapToInt(Dish::getCalories).sum());
-        Utils.menus.stream().mapToInt(Dish::getCalories).reduce(Integer::sum).ifPresent(System.out::println);
-        System.out.println(Utils.menus.stream().collect(averagingInt(Dish::getCalories)));
-        IntSummaryStatistics intSummaryStatistics = Utils.menus.stream().collect(summarizingInt(Dish::getCalories));
+        System.out.println((Double) Utils.menus.stream().mapToDouble(Dish::getCalories).sum());
+        Utils.menus.stream().mapToDouble(Dish::getCalories).reduce(Double::sum).ifPresent(System.out::println);
+        System.out.println(Utils.menus.stream().collect(averagingDouble(Dish::getCalories)));
+        DoubleSummaryStatistics intSummaryStatistics = Utils.menus.stream().collect(summarizingDouble(Dish::getCalories));
         System.out.println(intSummaryStatistics.getAverage());
         System.out.println(Utils.menus.stream().map(Dish::getName).collect(joining(", ")));
     }
@@ -153,8 +150,8 @@ class TestStream {
     void testCompletableFuture() {
         Shop shop = new Shop("Best Shop");
         long start = System.nanoTime();
-        //Future<Double> futurePrice = shop.getPriceAsync("my favorite product");
-        Future<Double> futurePrice = shop.getPriceAsyncNew("my favorite product");
+        Future<Double> futurePrice = shop.getPriceAsync("my favorite product");
+        //Future<Double> futurePrice = shop.getPriceAsyncNew("my favorite product");
         long invocationTime = ((System.nanoTime() - start) / 1_000_000);
         System.out.println("Invocation returned after " + invocationTime + " msecs");
 
@@ -178,7 +175,7 @@ class TestStream {
 
     private List<String> findPrices(String product) {
         List<CompletableFuture<String>> futures = Utils.shops.stream().map(shop ->
-                CompletableFuture.supplyAsync(() -> shop.getShopName() + " price is " + shop.getPrice(product), executor)
+                CompletableFuture.supplyAsync(() -> shop.getName() + " price is " + shop.getPrice(product), executor)
         ).collect(Collectors.toList());
 
         return futures.stream().map(CompletableFuture::join).collect(Collectors.toList());

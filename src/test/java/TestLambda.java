@@ -1,4 +1,4 @@
-import com.monkgirl.chapter3.Lambda;
+import com.monkgirl.java8InAction.chapter3.Lambda;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
