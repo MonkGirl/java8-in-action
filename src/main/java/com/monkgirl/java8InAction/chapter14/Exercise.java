@@ -1,4 +1,4 @@
-package com.monkgirl.java8InAction.chapter13;
+package com.monkgirl.java8InAction.chapter14;
 
 import java.util.function.DoubleUnaryOperator;
 import java.util.stream.Stream;

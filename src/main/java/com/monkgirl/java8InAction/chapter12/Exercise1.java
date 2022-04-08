@@ -1,21 +1,14 @@
 package com.monkgirl.java8InAction.chapter12;
 
-import java.time.LocalTime;
-import java.time.LocalDateTime;
-import java.time.Instant;
-import java.time.Duration;
-import java.time.Period;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
-import java.time.DayOfWeek;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
-import java.time.ZoneId;
-import java.time.Month;
 import java.time.temporal.ChronoField;
-import java.time.LocalDate;
+
 import static java.time.temporal.TemporalAdjusters.*;
 
 public class Exercise1{
@@ -179,7 +172,7 @@ public class Exercise1{
 	Instant instant = Instant.now();
 	System.out.println(instant.atZone(zoneID));
 
-	System.out.println(time.toInstant(zoneID));
+	System.out.println(time.toInstant((ZoneOffset) zoneID));
 	System.out.println(LocalDateTime.ofInstant(instant, zoneID));
     }
 }

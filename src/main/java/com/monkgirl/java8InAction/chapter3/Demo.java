@@ -31,7 +31,8 @@ public class Demo{
 	System.out.println(oddNumbers.test(1000));
 
 	int portNumber = 1337;
-	Runnable r1 = ()->System.out.println(portNumber);
+		int finalPortNumber = portNumber;
+		Runnable r1 = ()->System.out.println(finalPortNumber);
 	r1.run();
 	portNumber = 1338;
     }
