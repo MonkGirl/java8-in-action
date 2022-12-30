@@ -1,6 +1,6 @@
-import com.monkgirl.java8InAction.chapter11.Shop;
-import com.monkgirl.java8InAction.common.Dish;
-import com.monkgirl.java8InAction.common.Utils;
+import com.monkgirl.java8inaction.chapter11.Shop;
+import com.monkgirl.java8inaction.common.Dish;
+import com.monkgirl.java8inaction.common.Utils;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
