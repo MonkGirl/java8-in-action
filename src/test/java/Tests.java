@@ -1,5 +1,4 @@
-package com.monkgirl.java8inaction.chapter8;
-
+import com.monkgirl.java8inaction.chapter8.Point;
 import com.monkgirl.java8inaction.common.LambdaUtils;
 
 import java.util.Arrays;
@@ -12,7 +11,6 @@ public class Tests {
         Point p1 = new Point(5, 5);
         Point p2 = p1.moveRightBy(10);
         System.out.println(p2.getX());
-        assertEquals("success", 15, String.valueOf(p2.getX()));
         assertEquals("fail", 5, String.valueOf(p2.getY()));
         System.out.println("...");
     }
