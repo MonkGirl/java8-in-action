@@ -1,0 +1,77 @@
+<configuration>
+    <property name="LOG_PATH" value="D:/StudyRoom/logs"/>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %msg%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/java8-in-action.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/java8-in-action.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>127.0.0.1:5044</destination>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <mdc/>
+                <context/>
+                <logLevel/>
+                <loggerName/>
+                <pattern>
+                    <pattern>
+                        {
+                        "app_name": "java8-in-action"
+                        }
+                    </pattern>
+                </pattern>
+                <threadName/>
+                <message/>
+                <logstashMarkers/>
+                <stackTrace/>
+            </providers>
+        </encoder>
+    </appender>
+    <!--    <appender name="AMQP" class="org.springframework.amqp.rabbit.logback.AmqpAppender">-->
+    <!--        <layout>-->
+    <!--            <pattern>-->
+    <!--                {-->
+    <!--                    "time": "%date{ISO8601}",-->
+    <!--                    "thread": "%thread",-->
+    <!--                    "level": "%level",-->
+    <!--                    "class": "%logger{36}",-->
+    <!--                    "message": "%message"-->
+    <!--                }-->
+    <!--            </pattern>-->
+    <!--        </layout>-->
+    <!--        <host>localhost</host>-->
+    <!--        <port>5672</port>-->
+    <!--        <username>guest</username>-->
+    <!--        <password>guest</password>-->
+    <!--        <applicationId>order-service</applicationId>-->
+    <!--        <routingKeyPattern>order-service</routingKeyPattern>-->
+    <!--        <declareExchange>true</declareExchange>-->
+    <!--        <exchangeType>direct</exchangeType>-->
+    <!--        <exchangeName>ex_logstash</exchangeName>-->
+    <!--        <generateId>true</generateId>-->
+    <!--        <charset>UTF-8</charset>-->
+    <!--        <durable>true</durable>-->
+    <!--        <deliveryMode>PERSISTENT</deliveryMode>-->
+    <!--    </appender>-->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STASH"/>
+        <!--        <appender-ref ref="AMQP" />-->
+    </root>
+</configuration>
