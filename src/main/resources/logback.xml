@@ -1,5 +1,7 @@
 <configuration>
-    <property name="LOG_PATH" value="D:/StudyRoom/logs"/>
+    <property name="APP_NAME" value="maven-series"/>
+    <property name="LOGSTASH_ADDRESS" value="127.0.0.1:5044"/>
+    <property name="LOG_PATH" value="D:/StudyRoom/logs/${APP_NAME}"/>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
@@ -10,9 +12,9 @@
         </encoder>
     </appender>
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_PATH}/java8-in-action.log</file>
+        <file>${LOG_PATH}/${APP_NAME}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/java8-in-action.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/${APP_NAME}.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>10</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
@@ -31,7 +33,7 @@
                 <pattern>
                     <pattern>
                         {
-                        "app_name": "java8-in-action"
+                        "app_name": "${APP_NAME}"
                         }
                     </pattern>
                 </pattern>
