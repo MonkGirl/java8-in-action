@@ -10,8 +10,11 @@
             <entry key="lastExternalPluginCheckTime" value="1688452196909" />
           </map>
         </option>
-        <option name="version" value="27" />
+        <option name="version" value="28" />
       </configuration>
     </facet>
+  </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="58cbff9b-e2df-4d89-84e4-e17d902a3749" />
   </component>
 </module>
