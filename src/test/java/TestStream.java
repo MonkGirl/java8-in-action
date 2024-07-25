@@ -194,10 +194,4 @@ class TestStream {
                 t.setDaemon(true);
                 return t;
             });
-
-    @Test
-    void testReplace(){
-        String drgMenuUrl = "http://www.jxybdip.com/hygeia-ips/strong/m.aspx?c=czhy&u=must_replace&flag=true&r=/him_medical_ui/%23/patientsList/list.action";
-        System.out.println(drgMenuUrl.replace("must_replace", "H0992"));
-    }
 }
