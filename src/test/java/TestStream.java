@@ -31,7 +31,6 @@ import static java.util.stream.Collectors.*;
 class TestStream {
     @Test
     void testFilter() {
-        //List<String> list = Menu.menuList.stream().filter(dish -> dish.getCalories() > 300).sorted((dish1, dish2) -> dish1.getCalories() - dish2.getCalories()).map(Dish::getName).limit(3).collect(Collectors.toList());
         List<String> list = Utils.menus.stream().filter(dish -> dish.getCalories() > 300).sorted(Comparator.comparing(Dish::getCalories)).map(Dish::getName).limit(3).collect(Collectors.toList());
         System.out.println(list);
     }
@@ -46,9 +45,6 @@ class TestStream {
     @Test
     void testReduce() {
         IntStream intStream = IntStream.rangeClosed(0, 100);
-        //System.out.println(intStream.sum());
-        //System.out.println(intStream.reduce(0, (a, b) -> a+b));
-        //System.out.println(intStream.reduce(0, Integer::sum));
         System.out.println(intStream.reduce(0, Integer::max));
         System.out.println(Utils.menus.stream().mapToDouble(Dish::getCalories).sum());
     }
