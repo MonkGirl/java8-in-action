@@ -11,7 +11,7 @@ import java.util.List;
  * @author MissYoung
  * @version 0.1
  * @description
- * @date 2022-04-08 09:43:04
+ * @since 2022-04-08 09:43:04
  */
 public class Lambda {
     public static void process(Runnable runnable) {
