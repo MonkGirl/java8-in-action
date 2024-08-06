@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * @author MissYoung
  * @version 0.1
- * @description
  * @since 2022-04-08 09:43:04
  */
 public class Lambda {

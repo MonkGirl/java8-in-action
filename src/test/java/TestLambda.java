@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * @author powersi
  * @version 0.1
- * @description
  * @since 2021-03-16 11:05:10
  */
 class TestLambda {

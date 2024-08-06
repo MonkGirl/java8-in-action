@@ -25,7 +25,6 @@ import static java.util.stream.Collectors.*;
 /**
  * @author MissYoung
  * @version 0.1
- * @description
  * @since 2021-04-01 10:05:41
  */
 class TestStream {
