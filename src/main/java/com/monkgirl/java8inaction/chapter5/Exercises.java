@@ -1,6 +1,7 @@
 package com.monkgirl.java8inaction.chapter5;
 
 import com.monkgirl.java8inaction.common.Dish;
+import com.monkgirl.java8inaction.common.ExerciseException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,7 +11,12 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.Set;
 import java.util.function.IntSupplier;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
@@ -18,22 +24,44 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
-public class Exercises {
-    private static List<Dish> menu = new ArrayList<>();
+/**
+ * 练习.
+ *
+ * @author MissYoung
+ * @version 0.1
+ * @since 2024-08-30 11:20:55
+ */
+public final class Exercises {
+    /**
+     * 限制数量.
+     */
+    private static final int LIMIT = 5;
 
-    static {
-        menu = Arrays.asList(new Dish(800, "pork", Dish.Type.MEAT, false),
-                new Dish(900, "beef", Dish.Type.MEAT, false),
-                new Dish(500, "chicken", Dish.Type.MEAT, false),
-                new Dish(530, "french fries", Dish.Type.OTHER, true),
-                new Dish(350, "rice", Dish.Type.OTHER, true),
-                new Dish(120, "season fruit", Dish.Type.OTHER, true),
-                new Dish(550, "pizza", Dish.Type.OTHER, true),
-                new Dish(300, "prawns", Dish.Type.FISH, true),
-                new Dish(450, "salmon", Dish.Type.FISH, true));
+    private Exercises() {
+
     }
 
-    public static void main(String... args) {
+    /**
+     * 菜单.
+     */
+    private static final List<Dish> MENU = Arrays.asList(
+            new Dish(800, "pork", Dish.Type.MEAT, false),
+            new Dish(900, "beef", Dish.Type.MEAT, false),
+            new Dish(500, "chicken", Dish.Type.MEAT, false),
+            new Dish(530, "french fries", Dish.Type.OTHER, true),
+            new Dish(350, "rice", Dish.Type.OTHER, true),
+            new Dish(120, "season fruit", Dish.Type.OTHER, true),
+            new Dish(550, "pizza", Dish.Type.OTHER, true),
+            new Dish(300, "prawns", Dish.Type.FISH, true),
+            new Dish(450, "salmon", Dish.Type.FISH, true)
+    );
+
+    /**
+     * 主方法.
+     *
+     * @param args 命令行入参
+     */
+    public static void main(final String... args) {
         //run1();
         //run2();
         //run3();
@@ -48,27 +76,36 @@ public class Exercises {
         run12();
     }
 
+    /**
+     * run1.
+     */
     public static void run1() {
-        List<Dish> vegetarianDishes = menu.parallelStream()
+        List<Dish> vegetarianDishes = MENU.parallelStream()
                 .filter(Dish::isVegetarian)
                 .collect(toList());
         System.out.println(vegetarianDishes);
     }
 
+    /**
+     * run2.
+     */
     public static void run2() {
         List<Integer> numbers = Arrays.asList(7, 1, 2, 3, 5, 8, 10, 1, 7, 5);
         numbers.stream()
                 .filter(i -> i % 2 == 1)
                 .distinct()
                 //.limit(3)
-                .sorted((a, b) -> a.compareTo(b))
+                .sorted(Integer::compareTo)
                 //.limit(3)
                 .skip(3)
                 .forEach(System.out::println);
     }
 
+    /**
+     * run3.
+     */
     public static void run3() {
-        List<String> dishNames = menu.parallelStream()
+        List<String> dishNames = MENU.parallelStream()
                 .map(Dish::getName)
                 .collect(toList());
         System.out.println(dishNames);
@@ -93,8 +130,8 @@ public class Exercises {
                 .collect(toList());
         System.out.println(square);
 
-        List<Integer> num1 = Arrays.asList(1, 2, 3),
-                num2 = Arrays.asList(3, 4);
+        List<Integer> num1 = Arrays.asList(1, 2, 3);
+        List<Integer> num2 = Arrays.asList(3, 4);
         List<int[]> result = num1.stream()
                 .flatMap(i -> num2.stream().filter(j -> (i + j) % 3 == 0).map(j -> new int[]{i, j}))
                 .collect(toList());
@@ -103,23 +140,26 @@ public class Exercises {
         }
     }
 
+    /**
+     * run4.
+     */
     public static void run4() {
-        if (menu.stream().anyMatch(Dish::isVegetarian)) {
-            System.out.println("The menu is (somewhat) vegetarian friendly!!");
+        if (MENU.stream().anyMatch(Dish::isVegetarian)) {
+            System.out.println("The MENU is (somewhat) vegetarian friendly!!");
         }
-        if (menu.parallelStream().allMatch(d -> d.getCalories() < 1000)) {
+        if (MENU.parallelStream().allMatch(d -> d.getCalories() < 1000)) {
             System.out.println("Cool!");
         }
-        if (menu.parallelStream().noneMatch(d -> d.getCalories() > 1000)) {
+        if (MENU.parallelStream().noneMatch(d -> d.getCalories() > 1000)) {
             System.out.println("Very cool!!");
         }
 
-        Optional<Dish> dish = menu.stream()
+        Optional<Dish> dish = MENU.stream()
                 .filter(Dish::isVegetarian)
                 .findAny();
         System.out.println(dish);
 
-        menu.stream()
+        MENU.stream()
                 .filter(Dish::isVegetarian)
                 .findAny()
                 .ifPresent(d -> System.out.println(d.getName()));
@@ -132,6 +172,9 @@ public class Exercises {
         System.out.println(firstSquareDivisibleByTwo);
     }
 
+    /**
+     * run5.
+     */
     public static void run5() {
         List<Integer> numbers = Arrays.asList(2, 4, 7, 1, 2, 3, -4);
         //int result1 = numbers.parallelStream().reduce(0,(a, b)->a+b);
@@ -142,28 +185,31 @@ public class Exercises {
         System.out.println(result2);
 
         Optional<Integer> result3 = numbers.parallelStream().reduce(Integer::sum);
-        System.out.println(result3.get());
+        result3.ifPresent(System.out::println);
 
         //Optional<Integer> result4 = numbers.parallelStream().reduce(Integer::max);
         Optional<Integer> result4 = numbers.parallelStream().reduce(Integer::min);
-        System.out.println(result4.get());
+        result4.ifPresent(System.out::println);
 
-        int count = menu.parallelStream().map(d -> 1).reduce(0, Integer::sum);
+        int count = MENU.parallelStream().map(d -> 1).reduce(0, Integer::sum);
         System.out.println(count);
     }
 
+    /**
+     * run6.
+     */
     public static void run6() {
-        double calories = menu.parallelStream()
+        double calories = MENU.parallelStream()
                 .mapToDouble(Dish::getCalories)
                 .sum();
         System.out.println(calories);
 
-        OptionalDouble max = menu.parallelStream()
+        OptionalDouble max = MENU.parallelStream()
                 .mapToDouble(Dish::getCalories)
                 .max();
-        System.out.println(max.getAsDouble());
+        max.ifPresent(System.out::println);
 
-        DoubleStream doubleStream = menu.parallelStream()
+        DoubleStream doubleStream = MENU.parallelStream()
                 .mapToDouble(Dish::getCalories);
 
         Stream<Double> stream = doubleStream.boxed();
@@ -174,6 +220,9 @@ public class Exercises {
         System.out.println(list);
     }
 
+    /**
+     * run7.
+     */
     public static void run7() {
         IntStream number = IntStream.rangeClosed(1, 100);
         Stream<int[]> pythagoreanTriples = number.boxed()
@@ -183,6 +232,9 @@ public class Exercises {
         pythagoreanTriples.forEach(a -> System.out.println(a[0] + "," + a[1] + "," + a[2]));
     }
 
+    /**
+     * run8.
+     */
     public static void run8() {
         Stream<String> stream = Stream.of("Java8", "In", "Action");
         stream.map(String::toUpperCase).forEach(System.out::println);
@@ -193,72 +245,71 @@ public class Exercises {
 
     }
 
+    /**
+     * run9.
+     */
     public static void run9() {
         Path path = Paths.get("E:/Java8/Java8InAction/data.txt");
         long startTime1 = System.nanoTime();
-        try {
-            Stream<String> lines = Files.lines(path, Charset.defaultCharset());
-            long uniqueWords = lines.flatMap(line -> Arrays.stream(line.split(" "))).distinct().count();
+        try (Stream<String> lines = Files.lines(path, Charset.defaultCharset())) {
+            long uniqueWords = lines
+                    .flatMap(line -> Arrays.stream(line.split(" ")))
+                    .distinct()
+                    .count();
             System.out.println(uniqueWords);
         } catch (IOException e) {
-
+            throw new ExerciseException(e);
         }
         System.out.println((System.nanoTime() - startTime1) / 1000.0);
 
         long startTime2 = System.nanoTime();
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(new File("E:/java8/Java8InAction/data.txt")));
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("E:/java8/Java8InAction/data.txt")))) {
             String str;
             Set<String> container = new HashSet<>();
             while ((str = reader.readLine()) != null) {
-                for (String s : str.split(" ")) {
-                    container.add(s);
-                }
+                container.addAll(Arrays.asList(str.split(" ")));
             }
             System.out.println(container.size());
         } catch (IOException e) {
-
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                }
-            }
+            throw new ExerciseException(e);
         }
         System.out.println((System.nanoTime() - startTime2) / 1000.0);
     }
 
+    /**
+     * run10.
+     */
     public static void run10() {
         //iterate
         Stream.iterate(0, n -> n + 2)
-                .limit(10)
+                .limit(2 * LIMIT)
                 .forEach(System.out::println);
 
         Stream.iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]})
-                .limit(10)
+                .limit(2 * LIMIT)
                 .map(t -> t[0])
                 .forEach(System.out::println);
     }
 
+    /**
+     * run11.
+     */
     public static void run11() {
         Stream.generate(Math::random)
-                .limit(5)
+                .limit(LIMIT)
                 .forEach(System.out::println);
 
         IntStream.generate(() -> 1)
-                .limit(5)
+                .limit(LIMIT)
                 .forEach(System.out::println);
 
-        IntStream.generate(new IntSupplier() {
-                    public int getAsInt() {
-                        return 3;
-                    }
-                }).limit(5)
+        IntStream.generate(() -> 3).limit(LIMIT)
                 .forEach(System.out::println);
     }
 
+    /**
+     * run12.
+     */
     public static void run12() {
         IntSupplier fib = new IntSupplier() {
             private int previous = 0;
@@ -273,7 +324,7 @@ public class Exercises {
             }
         };
         IntStream.generate(fib)
-                .limit(5)
+                .limit(LIMIT)
                 .forEach(System.out::println);
     }
 }
