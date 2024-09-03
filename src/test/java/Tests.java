@@ -18,7 +18,7 @@ public class Tests {
     public void testComparingTwoPoints() throws Exception {
         Point p1 = new Point(3, 5);
         Point p2 = new Point(3, 20);
-        int result = Point.compareByXAndThenY.compare(p1, p2);
+        int result = Point.COMPARE_BY_X_AND_THEN_Y.compare(p1, p2);
         assertEquals(Float.parseFloat("test"), -1, result);
     }
 
