@@ -4,40 +4,47 @@ import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-public class Shop{
+/**
+ * 门店.
+ *
+ * @author MissYoung
+ * @version 0.1
+ * @since 2024-08-30 11:20:55
+ */
+public class Shop {
     private String name;
 
-    public Shop(String name){
-	this.name = name;
+    public Shop(String name) {
+        this.name = name;
     }
 
-    public String getName(){
-	return name;
-    }
-    
-    public String getPrice(String product){
-	///return calculatePrice(product);
-	double price = calculatePrice(product);
-	Discount.Code code = Discount.Code.values()[new Random().nextInt(Discount.Code.values().length)];
-	return String.format("%s:%.2f:%s", name, price, code);
+    public String getName() {
+        return name;
     }
 
-    private double calculatePrice(String product){
-	delay();
-	//throw new RuntimeException("Not Found");
-	return new Random().nextDouble() * product.charAt(0) + product.charAt(1);
+    public String getPrice(String product) {
+        ///return calculatePrice(product);
+        double price = calculatePrice(product);
+        Discount.Code code = Discount.Code.values()[new Random().nextInt(Discount.Code.values().length)];
+        return String.format("%s:%.2f:%s", name, price, code);
     }
 
-    public void delay(){
-	try{
-	    Thread.sleep(1000L);
-	}catch(InterruptedException ie){
-	    throw new RuntimeException(ie);
-	}
+    private double calculatePrice(String product) {
+        delay();
+        //throw new RuntimeException("Not Found");
+        return new Random().nextDouble() * product.charAt(0) + product.charAt(1);
     }
 
-    public Future<Double> getPriceAsync(String product){
-	CompletableFuture<Double> futurePrice = new CompletableFuture<>();
+    public void delay() {
+        try {
+            Thread.sleep(1000L);
+        } catch (InterruptedException ie) {
+            throw new RuntimeException(ie);
+        }
+    }
+
+    public Future<Double> getPriceAsync(String product) {
+        CompletableFuture<Double> futurePrice = new CompletableFuture<>();
 	/*new Thread(()->{
 		try{
 		    double price = calculatePrice(product);
@@ -47,10 +54,10 @@ public class Shop{
 		}
 		}).start();
 		return futurePrice;*/
-	return CompletableFuture.supplyAsync(() -> calculatePrice(product));
+        return CompletableFuture.supplyAsync(() -> calculatePrice(product));
     }
 
-	public void doSomethingElse(){
+    public void doSomethingElse() {
 
-	}
+    }
 }

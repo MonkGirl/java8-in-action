@@ -1,23 +1,33 @@
 package com.monkgirl.java8inaction.common;
 
-public class Trader{
-    private final String name;
-    private final String city;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-    public Trader(String name, String city){
-	this.name = name;
-	this.city = city;
-    }
+/**
+ * 商人.
+ *
+ * @author MissYoung
+ * @version 0.1
+ * @since 2024-08-30 11:20:55
+ */
+@Data
+@AllArgsConstructor
+public class Trader {
+    /**
+     * 姓名.
+     */
+    private String name;
+    /**
+     * 城市.
+     */
+    private String city;
 
-    public String getName(){
-	return name;
-    }
-
-    public String getCity(){
-	return city;
-    }
-
-    public String toString(){
-	return "Trader: " + this.name + " in " + this.city;
+    /**
+     * The description of the trader.
+     *
+     * @return the description of the trader
+     */
+    public String toString() {
+        return "Trader: " + this.name + " in " + this.city;
     }
 }

@@ -1,71 +1,85 @@
 package com.monkgirl.java8inaction.common;
 
-public class Dish{
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class Dish {
+    /**
+     * 计数器.
+     */
     private static int counter;
+    /**
+     * id.
+     */
     private final int id = ++counter;
+    /**
+     * 卡路里.
+     */
     private double calories;
+    /**
+     * 名称.
+     */
     private String name;
+    /**
+     * 类型.
+     */
     private Type type;
+    /**
+     * 是否素食.
+     */
     private boolean vegetarian;
-    
-    public Dish(double calories, String name, Type type, boolean vegetarian){
-	this.calories = calories;
-	this.name = name;
-	this.type = type;
-	this.vegetarian = vegetarian;
+
+    /**
+     * The description of the dish.
+     *
+     * @return the description of the dish
+     */
+    public String toString() {
+        return "Dish " + id + ": Name " + name + ", Calories " + calories;
     }
 
-    public String getName(){
-	return name;
+    /**
+     * 饮食类型.
+     */
+    public enum Type {
+        /**
+         * 肉类.
+         */
+        MEAT,
+        /**
+         * 鱼类.
+         */
+        FISH,
+        /**
+         * 其他.
+         */
+        OTHER
     }
 
-    public void setName(String name){
-	this.name = name;
-    }
-    
-    public double getCalories(){
-	return calories;
-    }
-
-    public void setCalories(double calories){
-	this.calories = calories;
+    /**
+     * 比较.
+     *
+     * @param dish 被比较的对象
+     * @return 比较结果
+     */
+    public int compareTo(final Dish dish) {
+        return dish.getName().compareTo(this.getName());
     }
 
-    public Type getType(){
-	return type;
-    }
-
-    public void setType(Type type){
-	this.type = type;
-    }
-
-    public boolean isVegetarian(){
-	return vegetarian;
-    }
-
-    public void setVegetarian(boolean vegetarian){
-	this.vegetarian = vegetarian;
-    }
-    
-    public String toString(){
-	return "Dish " + id + ": Name " + name + ", Calories " + calories;
-    }
-
-    public enum Type{
-       MEAT, FISH, OTHER
-    }
-
-    public int compareTo(Dish dish){
-	return dish.getName().compareTo(this.getName());
-    }
-
-    public CaloricLevel getCaloricLevel(){
-	if(this.getCalories()<=400){
-	    return CaloricLevel.DIET;
-	}else if(this.getCalories()<=700){
-	    return CaloricLevel.NORMAL;
-	}else{
-	    return CaloricLevel.FAT;
-	}
+    /**
+     * 获取卡路里水平.
+     *
+     * @return 卡路里水平
+     */
+    public CaloricLevel getCaloricLevel() {
+        if (this.getCalories() <= 400) {
+            return CaloricLevel.DIET;
+        } else if (this.getCalories() <= 700) {
+            return CaloricLevel.NORMAL;
+        } else {
+            return CaloricLevel.FAT;
+        }
     }
 }

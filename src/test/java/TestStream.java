@@ -30,7 +30,7 @@ import static java.util.stream.Collectors.*;
 class TestStream {
     @Test
     void testFilter() {
-        List<String> list = Utils.menus.stream().filter(dish -> dish.getCalories() > 300).sorted(Comparator.comparing(Dish::getCalories)).map(Dish::getName).limit(3).collect(Collectors.toList());
+        List<String> list = Utils.MENUS.stream().filter(dish -> dish.getCalories() > 300).sorted(Comparator.comparing(Dish::getCalories)).map(Dish::getName).limit(3).collect(Collectors.toList());
         System.out.println(list);
     }
 
@@ -45,7 +45,7 @@ class TestStream {
     void testReduce() {
         IntStream intStream = IntStream.rangeClosed(0, 100);
         System.out.println(intStream.reduce(0, Integer::max));
-        System.out.println(Utils.menus.stream().mapToDouble(Dish::getCalories).sum());
+        System.out.println(Utils.MENUS.stream().mapToDouble(Dish::getCalories).sum());
     }
 
     @Test
@@ -137,14 +137,14 @@ class TestStream {
 
     @Test
     void testCollect() {
-        System.out.println(Utils.menus.stream().count());
+        System.out.println(Utils.MENUS.stream().count());
         //System.out.println(Menu.menuList.stream().collect(summingInt(Dish::getCalories)));
-        System.out.println((Double) Utils.menus.stream().mapToDouble(Dish::getCalories).sum());
-        Utils.menus.stream().mapToDouble(Dish::getCalories).reduce(Double::sum).ifPresent(System.out::println);
-        System.out.println(Utils.menus.stream().collect(averagingDouble(Dish::getCalories)));
-        DoubleSummaryStatistics intSummaryStatistics = Utils.menus.stream().collect(summarizingDouble(Dish::getCalories));
+        System.out.println((Double) Utils.MENUS.stream().mapToDouble(Dish::getCalories).sum());
+        Utils.MENUS.stream().mapToDouble(Dish::getCalories).reduce(Double::sum).ifPresent(System.out::println);
+        System.out.println(Utils.MENUS.stream().collect(averagingDouble(Dish::getCalories)));
+        DoubleSummaryStatistics intSummaryStatistics = Utils.MENUS.stream().collect(summarizingDouble(Dish::getCalories));
         System.out.println(intSummaryStatistics.getAverage());
-        System.out.println(Utils.menus.stream().map(Dish::getName).collect(joining(", ")));
+        System.out.println(Utils.MENUS.stream().map(Dish::getName).collect(joining(", ")));
     }
 
     @Test
@@ -175,14 +175,14 @@ class TestStream {
     }
 
     private List<String> findPrices(String product) {
-        List<CompletableFuture<String>> futures = Utils.shops.stream().map(shop ->
+        List<CompletableFuture<String>> futures = Utils.SHOPS.stream().map(shop ->
                 CompletableFuture.supplyAsync(() -> shop.getName() + " price is " + shop.getPrice(product), executor)
         ).collect(Collectors.toList());
 
         return futures.stream().map(CompletableFuture::join).collect(Collectors.toList());
     }
 
-    private final Executor executor = Executors.newFixedThreadPool(Math.min(Utils.shops.size(), 100),
+    private final Executor executor = Executors.newFixedThreadPool(Math.min(Utils.SHOPS.size(), 100),
             runnable -> {
                 Thread t = new Thread(runnable);
                 //设置守护线程，这种方式不会阻止程序关停

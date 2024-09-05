@@ -163,7 +163,7 @@ public final class ParallelStreams {
     public static long sideEffectSum(final long num) {
         Accumulator accumulator = new Accumulator();
         LongStream.rangeClosed(1, num).forEach(accumulator::add);
-        return accumulator.total;
+        return accumulator.getTotal();
     }
 
     /**
@@ -175,7 +175,7 @@ public final class ParallelStreams {
     public static long parallelSideEffectSum(final long num) {
         Accumulator accumulator = new Accumulator();
         LongStream.rangeClosed(1, num).parallel().forEach(accumulator::add);
-        return accumulator.total;
+        return accumulator.getTotal();
     }
 
     /**

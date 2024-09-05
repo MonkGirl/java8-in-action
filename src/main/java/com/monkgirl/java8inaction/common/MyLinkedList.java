@@ -1,24 +1,52 @@
 package com.monkgirl.java8inaction.common;
 
-public class MyLinkedList<T> implements MyList<T>{
+
+import lombok.AllArgsConstructor;
+
+/**
+ * 链表列表.
+ *
+ * @param <T> 泛型
+ * @author MissYoung
+ * @version 0.1
+ * @since 2024-08-30 11:20:55
+ */
+@AllArgsConstructor
+public final class MyLinkedList<T> implements MyList<T> {
+    /**
+     * 表头.
+     */
     private final T head;
 
+    /**
+     * 表尾.
+     */
     private final MyList<T> tail;
 
-    public MyLinkedList(T head, MyList<T> tail){
-	this.head = head;
-	this.tail = tail;
+    /**
+     * 获取表头.
+     *
+     * @return 表头
+     */
+    public T head() {
+        return head;
     }
 
-    public T head(){
-	return head;
+    /**
+     * 获取表尾.
+     *
+     * @return 表尾
+     */
+    public MyList<T> tail() {
+        return tail;
     }
 
-    public MyList<T> tail(){
-	return tail;
-    }
-
-    public boolean isEmpty(){
-	return false;
+    /**
+     * 是否为空.
+     *
+     * @return 是否为空
+     */
+    public boolean isEmpty() {
+        return false;
     }
 }

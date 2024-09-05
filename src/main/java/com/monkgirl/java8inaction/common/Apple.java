@@ -1,46 +1,51 @@
 package com.monkgirl.java8inaction.common;
 
-/**
- * Demo Class
- */
-public class Apple{
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-    // the color of apple
+/**
+ * Apple.
+ *
+ * @author MissYoung
+ * @version 0.1
+ * @since 2024-08-30 11:20:55
+ */
+@Data
+@AllArgsConstructor
+public class Apple {
+
+    /**
+     * the color of apple.
+     */
     private String color;
 
-    // the weight of apple
+    /**
+     * the weight of apple.
+     */
     private double weight;
 
-    public Apple(){
-       this("green", 302);
+    /**
+     * 默认构造.
+     */
+    public Apple() {
+        this("green", 302);
     }
 
-    public Apple(double weight){
-	this("green", weight);
-    }
-    
-    public Apple(String color, double weight){
-	this.color = color;
-	this.weight = weight;
-    }
-
-    public void setWeight(Double weight){
-	this.weight = weight;
+    /**
+     * 重量构造.
+     *
+     * @param newWeight 重量
+     */
+    public Apple(final double newWeight) {
+        this("green", newWeight);
     }
 
-    public double getWeight(){
-	return weight;
-    }
-    
-    public void setColor(String color){
-	this.color = color;
-    }
-
-    public String getColor(){
-	return color;
-    }
-
-    public String toString(){
-	return "[color : "+color+", weight: " + weight + "g]";
+    /**
+     * toString.
+     *
+     * @return toString
+     */
+    public String toString() {
+        return "[color : " + color + ", weight: " + weight + "g]";
     }
 }

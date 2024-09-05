@@ -151,7 +151,7 @@ public final class Review {
      */
 
     public static void run5() {
-        List<Dish> dishes = Menu.menu;
+        List<Dish> dishes = Menu.MENU;
         System.out.println(dishes);
         long num = dishes.size();
         System.out.println(num);
@@ -205,7 +205,7 @@ public final class Review {
      * run6.
      */
     public static void run6() {
-        Map<Dish.Type, Map<CaloricLevel, List<Dish>>> dishesByTypeCaloricLevel = Menu.menu
+        Map<Dish.Type, Map<CaloricLevel, List<Dish>>> dishesByTypeCaloricLevel = Menu.MENU
                 .stream()
                 .collect(Collectors
                         .groupingBy(Dish::getType, Collectors.groupingBy(dish -> {
@@ -219,18 +219,18 @@ public final class Review {
                         })));
         System.out.println(dishesByTypeCaloricLevel);
 
-        Map<Dish.Type, Long> dishesByTypeNum = Menu.menu
+        Map<Dish.Type, Long> dishesByTypeNum = Menu.MENU
                 .stream()
                 .collect(Collectors.groupingBy(Dish::getType, Collectors.counting()));
         System.out.println(dishesByTypeNum);
 
-        Map<Dish.Type, Optional<Dish>> mostCaloricByType = Menu.menu
+        Map<Dish.Type, Optional<Dish>> mostCaloricByType = Menu.MENU
                 .stream()
                 .collect(Collectors.groupingBy(Dish::getType,
                         Collectors.maxBy(Comparator.comparingDouble(Dish::getCalories))));
         System.out.println(mostCaloricByType);
 
-        Map<Dish.Type, Dish> mostCaloricByType1 = Menu.menu
+        Map<Dish.Type, Dish> mostCaloricByType1 = Menu.MENU
                 .stream()
                 .collect(Collectors.toMap(
                         Dish::getType,
@@ -239,7 +239,7 @@ public final class Review {
                 );
         System.out.println(mostCaloricByType1);
 
-        Map<Dish.Type, Double> sumCaloricByType = Menu.menu.stream()
+        Map<Dish.Type, Double> sumCaloricByType = Menu.MENU.stream()
                 .collect(Collectors
                         .groupingBy(Dish::getType,
                                 Collectors.summingDouble(Dish::getCalories)));
@@ -250,12 +250,12 @@ public final class Review {
      * run7.
      */
     public static void run7() {
-        Map<Boolean, List<Dish>> map = Menu.menu
+        Map<Boolean, List<Dish>> map = Menu.MENU
                 .stream()
                 .collect(Collectors.partitioningBy(Dish::isVegetarian));
         System.out.println(map);
 
-        Map<Boolean, Map<Dish.Type, List<Dish>>> map1 = Menu.menu
+        Map<Boolean, Map<Dish.Type, List<Dish>>> map1 = Menu.MENU
                 .stream()
                 .collect(Collectors.partitioningBy(
                         Dish::isVegetarian,

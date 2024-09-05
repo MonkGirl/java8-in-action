@@ -20,7 +20,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.monkgirl.java8inaction.common.Menu.menu;
+import static com.monkgirl.java8inaction.common.Menu.MENU;
 import static java.util.Currency.getInstance;
 
 /**
@@ -103,36 +103,36 @@ public final class Exercise1 {
      * run2.
      */
     public static void run2() {
-        System.out.println(menu.size());
+        System.out.println(MENU.size());
         Comparator<Dish> dishCaloriesComparator = Comparator.comparingDouble(Dish::getCalories);
-        Optional<Dish> mostCalorieDish = menu.stream().max(dishCaloriesComparator);
+        Optional<Dish> mostCalorieDish = MENU.stream().max(dishCaloriesComparator);
         mostCalorieDish.ifPresent(System.out::println);
 
-        menu.stream().min(Comparator.comparingDouble(Dish::getCalories)).ifPresent(System.out::println);
-        System.out.println(menu.stream().mapToDouble(Dish::getCalories).sum());
-        System.out.println(menu.stream().collect(Collectors.averagingDouble(Dish::getCalories)));
-        System.out.println(menu.stream().collect(Collectors.summarizingDouble(Dish::getCalories)));
+        MENU.stream().min(Comparator.comparingDouble(Dish::getCalories)).ifPresent(System.out::println);
+        System.out.println(MENU.stream().mapToDouble(Dish::getCalories).sum());
+        System.out.println(MENU.stream().collect(Collectors.averagingDouble(Dish::getCalories)));
+        System.out.println(MENU.stream().collect(Collectors.summarizingDouble(Dish::getCalories)));
 
-        System.out.println(menu.stream().map(Dish::getName).collect(Collectors.joining(", ")));
-        System.out.println(menu.stream().map(Dish::getCalories).reduce(0.0, Double::sum));
-        System.out.println(menu.stream().reduce((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2));
-        System.out.println(menu.stream().reduce((d1, d2) -> d1.getCalories() < d2.getCalories() ? d1 : d2));
+        System.out.println(MENU.stream().map(Dish::getName).collect(Collectors.joining(", ")));
+        System.out.println(MENU.stream().map(Dish::getCalories).reduce(0.0, Double::sum));
+        System.out.println(MENU.stream().reduce((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2));
+        System.out.println(MENU.stream().reduce((d1, d2) -> d1.getCalories() < d2.getCalories() ? d1 : d2));
     }
 
     /**
      * run3.
      */
     public static void run3() {
-        System.out.println(menu.stream().map(Dish::getCalories).reduce(0.0, Double::sum));
-        System.out.println(menu.stream().mapToDouble(Dish::getCalories).sum());
-        System.out.println(menu.stream().collect(Collectors.groupingBy(Dish::getType)));
+        System.out.println(MENU.stream().map(Dish::getCalories).reduce(0.0, Double::sum));
+        System.out.println(MENU.stream().mapToDouble(Dish::getCalories).sum());
+        System.out.println(MENU.stream().collect(Collectors.groupingBy(Dish::getType)));
     }
 
     /**
      * run4.
      */
     public static void run4() {
-        System.out.println(menu.stream()
+        System.out.println(MENU.stream()
                 .collect(Collectors.groupingBy(dish -> {
                     if (dish.getCalories() < 400) {
                         return CaloricLevel.DIET;
@@ -148,7 +148,7 @@ public final class Exercise1 {
      * run5.
      */
     public static void run5() {
-        Map<Dish.Type, Map<CaloricLevel, List<Dish>>> map = menu.stream()
+        Map<Dish.Type, Map<CaloricLevel, List<Dish>>> map = MENU.stream()
                 .collect(Collectors.groupingBy(Dish::getType, Collectors.groupingBy(dish -> {
                     if (dish.getCalories() < 400) {
                         return CaloricLevel.DIET;
@@ -160,11 +160,11 @@ public final class Exercise1 {
                 })));
         System.out.println(map);
 
-        Map<Dish.Type, Long> map1 = menu.stream()
+        Map<Dish.Type, Long> map1 = MENU.stream()
                 .collect(Collectors.groupingBy(Dish::getType, Collectors.counting()));
         System.out.println(map1);
 
-        Map<Dish.Type, Optional<Dish>> map2 = menu.stream()
+        Map<Dish.Type, Optional<Dish>> map2 = MENU.stream()
                 .collect(Collectors.groupingBy(
                         Dish::getType,
                         Collectors.minBy(Comparator.comparingDouble(Dish::getCalories)))
@@ -176,7 +176,7 @@ public final class Exercise1 {
      * run6.
      */
     public static void run6() {
-        Map<Dish.Type, Dish> map1 = menu.stream()
+        Map<Dish.Type, Dish> map1 = MENU.stream()
                 .collect(Collectors.toMap(
                                 Dish::getType,
                                 Function.identity(),
@@ -185,11 +185,11 @@ public final class Exercise1 {
                 );
         System.out.println(map1);
 
-        Map<Dish.Type, Double> map2 = menu.stream()
+        Map<Dish.Type, Double> map2 = MENU.stream()
                 .collect(Collectors.groupingBy(Dish::getType, Collectors.summingDouble(Dish::getCalories)));
         System.out.println(map2);
 
-        Map<Dish.Type, Set<CaloricLevel>> map3 = menu.stream()
+        Map<Dish.Type, Set<CaloricLevel>> map3 = MENU.stream()
                 .collect(Collectors.groupingBy(Dish::getType, Collectors.mapping(dish -> {
                     if (dish.getCalories() < 400) {
                         return CaloricLevel.DIET;
@@ -201,7 +201,7 @@ public final class Exercise1 {
                 }, Collectors.toSet())));
         System.out.println(map3);
 
-        Map<Dish.Type, Set<CaloricLevel>> map4 = menu.stream()
+        Map<Dish.Type, Set<CaloricLevel>> map4 = MENU.stream()
                 .collect(Collectors.groupingBy(Dish::getType, Collectors.mapping(dish -> {
                     if (dish.getCalories() < 400) {
                         return CaloricLevel.DIET;
