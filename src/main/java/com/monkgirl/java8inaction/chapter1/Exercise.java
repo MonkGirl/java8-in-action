@@ -4,7 +4,6 @@ import com.monkgirl.java8inaction.common.Apple;
 import com.monkgirl.java8inaction.common.AppleBasket;
 import com.monkgirl.java8inaction.common.ExerciseException;
 import com.monkgirl.java8inaction.common.LambdaUtils;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import java.util.List;
  * @version 0.1
  * @since 2024-08-30 11:20:55
  */
-@Slf4j
 public final class Exercise {
 
     /**

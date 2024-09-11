@@ -187,8 +187,14 @@ public final class ParallelStreams {
     public static long forkJoinSum(final long num) {
         long[] numbers = LongStream.rangeClosed(1, num).toArray();
         ForkJoinTask<Long> task = new ForkJoinSumCalculator(numbers);
-        try (ForkJoinPool forkJoinPool = new ForkJoinPool()) {
+        ForkJoinPool forkJoinPool = null;
+        try {
+            forkJoinPool = new ForkJoinPool();
             return forkJoinPool.invoke(task);
+        } finally {
+            if (forkJoinPool != null) {
+                forkJoinPool.shutdown();
+            }
         }
     }
 

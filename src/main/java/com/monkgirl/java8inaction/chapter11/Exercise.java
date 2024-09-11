@@ -5,14 +5,7 @@ import com.monkgirl.java8inaction.common.ExerciseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -86,13 +79,19 @@ public final class Exercise {
      * run1.
      */
     public static void run1() {
-        try (ExecutorService executor = Executors.newCachedThreadPool()) {
+        ExecutorService executor = null;
+        try {
+            executor = Executors.newCachedThreadPool();
             Future<Double> future = executor.submit(Exercise::doSomeLongComputation);
             doSomethingElse();
 
             Double result = future.get(5, TimeUnit.SECONDS);
         } catch (ExecutionException | InterruptedException | TimeoutException e) {
             throw new ExerciseException(e);
+        } finally {
+            if (executor != null) {
+                executor.shutdown();
+            }
         }
     }
 
