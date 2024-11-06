@@ -7,14 +7,11 @@
           <map>
             <entry key="com.zeroturnaround.jrebel.FormatVersion" value="7.0.0" />
             <entry key="jrebelEnabled" value="true" />
-            <entry key="lastExternalPluginCheckTime" value="1703042298190" />
+            <entry key="lastExternalPluginCheckTime" value="1729853122718" />
           </map>
         </option>
-        <option name="version" value="43" />
+        <option name="version" value="46" />
       </configuration>
     </facet>
-  </component>
-  <component name="SonarLintModuleSettings">
-    <option name="uniqueId" value="58cbff9b-e2df-4d89-84e4-e17d902a3749" />
   </component>
 </module>
